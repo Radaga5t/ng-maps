@@ -1,0 +1,32 @@
+<label for="marker-title">Marker title (before click on the map) </label>
+<input type="text"
+       id="marker-title"
+       #markerTitle>
+<br>
+
+<label for="marker-type">Marker type (different images) </label>
+<select 
+  id="marker-type"
+  #markerType>
+  <option value="job">Job</option>
+  <option value="consult">Consult</option>
+  <option value="help">Help</option>
+</select>
+
+<agm-map [latitude]="lat"
+         [longitude]="lng"
+         [zoom]="zoom"
+         (mapClick)="onMapClick($event)">
+  <agm-marker
+    *ngFor="let m of markers; let i = index"
+    [latitude]="m.lat"
+    [longitude]="m.lng"
+    [iconUrl]="m.image">
+    <agm-info-window>
+      <h3>{{ m.title || 'No title' }} </h3>
+      <h5>Type: {{ m.type }}</h5>
+      <br>
+      <button (click)="onMarkerRemove(m)">Remove marker</button>
+    </agm-info-window>
+  </agm-marker>
+</agm-map>

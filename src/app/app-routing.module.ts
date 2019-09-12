@@ -1,8 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { GoogleMapComponent } from './google-map/google-map.component';
 
-const routes: Routes = [];
+
+const routes: Routes = [
+  {
+    path: 'test', component: GoogleMapComponent
+  },
+  {
+    path: '**', redirectTo: '/', pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
