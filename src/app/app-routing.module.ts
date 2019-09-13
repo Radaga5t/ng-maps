@@ -6,7 +6,7 @@ import { GoogleMapComponent } from './google-map/google-map.component';
 
 const routes: Routes = [
   {
-    path: 'test', component: GoogleMapComponent
+    path: '', component: GoogleMapComponent
   },
   {
     path: '**', redirectTo: '/', pathMatch: 'full'

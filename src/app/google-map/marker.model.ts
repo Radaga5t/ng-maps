@@ -1,15 +1,15 @@
 export class Marker {
-  public lat: string;
-  public lng: string;
+  public lat: number;
+  public lng: number;
 
   public title: string;
   public type: string;
 
   public image: string;
   
-  constructor(lat: string, lng: string, title: string, type: string) {
-    this.lat = lat.toString();
-    this.lng = lng.toString();
+  constructor(lat: number, lng: number, title: string, type: string = "default") {
+    this.lat = lat;
+    this.lng = lng;
 
     this.title = title;
     this.type = type;
@@ -26,7 +26,7 @@ export class Marker {
         break;
     
       default:
-        this.image = 'https://static.thenounproject.com/png/1221847-200.png';
+        this.image = '';
         break;
     }
   }
