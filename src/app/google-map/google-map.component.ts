@@ -11,6 +11,11 @@ import { Marker } from './marker.model';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
+
+  // TODO: 
+  // 1. Посмотреть, можно ли программно сделать скрин карты и вставить в емейл.
+  // 2. Разбирать API Google Translate
+
   @ViewChild('markerTitle', {static: false})
   markerTitle: ElementRef;
   
@@ -91,6 +96,23 @@ export class GoogleMapComponent implements OnInit {
     markers.forEach(marker => {
       this.setMarker(marker);
     });
+  }
+
+  getStaticMapImage(lat: number = this.lat, lng: number = this.lng, 
+                    zoom: number = this.zoom, width: number = 400, height: number = 400,
+                    apiKey: string = "AIzaSyDEzJs8-e0qS73YnRZfgoqzS2JOZX9WvnI",
+                    markers?: {lat: number, lng: number}[]) {
+    let queryString = "https://maps.googleapis.com/maps/api/staticmap?center=" + lat.toString() + "," + lng.toString() +
+                      "&zoom=" + zoom.toString() + "&size=" + width.toString() + "x" + height.toString();
+    
+    if (markers) {
+      queryString += "&markers=color:blue|"
+      markers.forEach(marker => {
+        queryString += marker.lat + ',' + marker.lng + '|';
+      });
+    }
+    
+    return queryString + "&key=" + apiKey;
   }
 
   // setCurrentLocation() {
