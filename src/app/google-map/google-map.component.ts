@@ -5,6 +5,8 @@ import * as MarkerClusterer from "@google/markerclusterer"
 
 import { Marker } from './marker.model';
 
+import { Polyline } from "./encoded-polyline";
+
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -101,15 +103,30 @@ export class GoogleMapComponent implements OnInit {
   getStaticMapImage(lat: number = this.lat, lng: number = this.lng, 
                     zoom: number = this.zoom, width: number = 400, height: number = 400,
                     apiKey: string = "AIzaSyDEzJs8-e0qS73YnRZfgoqzS2JOZX9WvnI",
-                    markers?: {lat: number, lng: number}[]) {
+                    markers: {lat: number, lng: number}[] = [{lat: this.lat, lng: this.lng}],
+                    path: boolean = true) {
+    
+    zoom = 11;
+
+    markers.push({lat: this.lat + 0.04, lng: this.lng + 0.08});
+    
     let queryString = "https://maps.googleapis.com/maps/api/staticmap?center=" + lat.toString() + "," + lng.toString() +
                       "&zoom=" + zoom.toString() + "&size=" + width.toString() + "x" + height.toString();
     
     if (markers) {
-      queryString += "&markers=color:blue|"
+      queryString += "&markers="
       markers.forEach(marker => {
         queryString += marker.lat + ',' + marker.lng + '|';
       });
+    }
+
+    if (path && markers) {
+      let pl = new Polyline;
+      queryString += "&path=color:red|weight:5|enc:" + pl.encodeGPolyline(markers.map(item => [item.lat, item.lng]));
+      // queryString += "&path=";
+      // markers.forEach(marker => {
+      //   queryString += marker.lat.toFixed(5) + ',' + marker.lng.toFixed(5) + '|';
+      // });
     }
     
     return queryString + "&key=" + apiKey;
